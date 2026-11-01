@@ -24,16 +24,16 @@ namespace console {
         SORT_LOG("\n");
         SORT_LOG("Which Sorting Algorithm should be used? ");
 		std::string sortingAlgorithmInput = "";
-        std::cin >> sortingAlgorithmInput;
+        std::getline(std::cin, sortingAlgorithmInput);
 
         SORT_LOG("\n");
         SORT_LOG("Sort into Ascending or Descending? (A/d) ");
 		std::string isAscendingInput = "";
-        std::cin >> isAscendingInput;
+        std::getline(std::cin, isAscendingInput);
 
         SORT_LOG("\n");
         SORT_LOG("Input your List of Numbers: (whitespace seperated...)\n");
-        std::cin >> inputs.numberList;
+        std::getline(std::cin, inputs.numberList);
         
         SORT_LOG("\n");
 
@@ -53,7 +53,7 @@ namespace console {
 				return false;
 		}
         inputs.isAscending = (isAscendingInput != "d") && (isAscendingInput != "D"); // Defaults to Ascending
-
+        
         return true;
     }
 
@@ -79,14 +79,14 @@ namespace console {
         return true;
     }
 
-    //void NormaliseInputsForEngine(engine.SortingData& sortingData, const Inputs& inputs) {
-    //    sortingData.sortingAlgorithm = inputs.sortingAlgorithm;
-    //    sortingData.isAscending = inputs.isAscending;
+    void NormaliseInputsForEngine(engine::SortingData& sortingData, const Inputs& inputs) {
+        sortingData.sortingAlgorithm = inputs.sortingAlgorithm;
+        sortingData.isAscending = inputs.isAscending;
 
-    //    sortingData.numberList = SplitNumberList(inputs.numberList);
-    //}
-    
-    void Run() {
+        SplitNumberList(sortingData.numberList, inputs.numberList);
+    }
+
+	void GatherSortingData(engine::SortingData& sortingData) {
         Inputs inputs = { engine::SortingAlgorithm::NONE, false, "" };
         std::vector<int32_t> numberList = {};
 
@@ -94,10 +94,10 @@ namespace console {
         while (!valid) {
             valid = AskInputs(inputs);
 
-			if (!valid) {
-				SORT_LOG("Error: Invalid inputs. Please enter again.\n\n");
-				continue;
-			}
+            if (!valid) {
+                SORT_LOG("Error: Invalid inputs. Please enter again.\n\n");
+                continue;
+            }
 
             valid = SplitNumberList(numberList, inputs.numberList);
 
@@ -107,8 +107,19 @@ namespace console {
             }
         }
 
-        //engine.SortingData sortingData = { 0, false, {} };
-        //NormaliseInputsForEngine(sortingData, inputs);
+        NormaliseInputsForEngine(sortingData, inputs);
+	}
+    
+    void Run() {
+        engine::SortingData sortingData = { engine::SortingAlgorithm::NONE, true, {} };
+
+		GatherSortingData(sortingData);
+        
+        engine::SortList(sortingData);
+
+		SORT_LOG("\nInfo: List Sorted\n\n");
+
+        engine::OutputList(sortingData);
     }
 
 }
