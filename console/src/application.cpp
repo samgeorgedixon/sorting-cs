@@ -35,8 +35,6 @@ namespace console {
         SORT_LOG("Input your List of Numbers: (whitespace seperated...)\n");
         std::getline(std::cin, inputs.numberList);
         
-        SORT_LOG("\n");
-
         // Set Inputs
 		if (sortingAlgorithmInput.empty()) { // Validate Sorting Algorithm Input
 			return false;

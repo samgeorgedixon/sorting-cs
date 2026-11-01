@@ -10,9 +10,12 @@ namespace engine {
 	void SortViaInsertion(SortingData& data) {
         int8_t direction = data.isAscending ? 1 : -1;
 
-		SORT_LOG("direction: %d\n", direction);
+        int start   = data.isAscending ? 1 : data.numberList.size() - 2;
+        int end     = data.isAscending ? data.numberList.size() : 0;
 
-        for (int i = 1; i < data.numberList.size(); i++) {
+        int i = start;
+
+        while (i >= 0 && i < data.numberList.size()) {
             int item = data.numberList[i];
 
             int j = i - direction; // Previous index: Then decreases...
@@ -26,6 +29,8 @@ namespace engine {
 
             // Finnaly insert item
             data.numberList[j + direction] = item;
+
+			i += direction;
         }
 	}
 
