@@ -1,9 +1,6 @@
 #include "application.h"
 
 int main(int argc, char* argv[]) {
-	app::Setup();
-	app::Run();
-
-	app::Close();
+	console::Run();
 	return 0;
 }

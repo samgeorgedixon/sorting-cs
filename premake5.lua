@@ -25,6 +25,7 @@ bin_int = "%{wks.location}/bin/bin-int/"
 
 project "console"
     location "console"
+    kind "ConsoleApp"
     
     targetname "sorting_cs_console"
     targetdir (bin .. "console/" .. build)

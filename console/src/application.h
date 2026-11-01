@@ -2,6 +2,6 @@
 
 namespace console {
 
-	void Start();
+	void Run();
 
 }
